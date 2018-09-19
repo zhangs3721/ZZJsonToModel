@@ -1,21 +1,22 @@
 #import "ViewController.h"
 #import "YYModel.h"
 #import "ZZWriter.h"
-//#import "BaseModel.h"
+#import "BaseModel.h"
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
+    NSLog(@"启动程序");
     // 1.模拟返回的 json
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"JSON" ofType:@"json"]];
+    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"JSONSS" ofType:@"json"]];
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    
+    NSLog(@"获取json");
     // 2.生成文件存放的路径
     NSURL *path = [NSURL URLWithString:@"/Users/zhang/Desktop/ZZMonster/ZZMonster/models"];
-    
+//    NSURL *path = [NSURL URLWithString:@"/Users/zhang/Desktop/swift_demo/demo/demo/tools"];
+
     /*  3.调用方法
      *  FileName: 文件名
      *  ExtensionClassName: 为预防自动生成的类名重复。例Authors类后加后缀->AuthorsClass，不会污染数据。
@@ -25,13 +26,14 @@
     */
     NSError *error = nil;
     [ZZWriter writeClassObjectsWithFileName:@"BaseModel" withExtensionClassName:@"class" withJson:json toFileURL:path error:&error];
-    
+    NSLog(@"生成model");
+
     if (error) {
         NSLog(@"error = %@",error.localizedDescription);
     }else {
         // 4.生成model
-//        BaseModel *model = nil;
-//        model = [BaseModel yy_modelWithJSON:json];
+        BaseModel *model = nil;
+        model = [BaseModel yy_modelWithJSON:json];
         NSLog(@"yes");
     }
 }

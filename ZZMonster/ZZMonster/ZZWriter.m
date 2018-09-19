@@ -8,7 +8,6 @@
 
 #import "ZZWriter.h"
 #import "NSString+ZZFormat.h"
-#import "NSArray+ZZFormat.h"
 
 @interface ZZWriter ()
 @property (nonatomic, strong) NSMutableArray *classObjects;
@@ -22,7 +21,7 @@
     
     ZZWriter *writer = ZZWriter.new;
     // 整理出所有存在的类及类型
-    [writer formatAllDict:json withFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName];
+    [writer willFormat:json withFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName];
     
     // 输出.h
     NSString *hFilename = [NSString stringWithFormat:@"%@.h", fileName];
@@ -42,125 +41,172 @@
     }
 }
 
-#pragma mark - .h
-/// 分析数据中基本元素的类型
-- (NSDictionary *)analysisPropertyTypeWithDict:(NSDictionary *)dict {
+#pragma mark - main
+/// 格式化数据中所有字典的类型
+- (void)willFormat:(NSDictionary *)dict withFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName {
+    // 先初始化
+    self.classNames = [NSMutableArray array];
+    self.classObjects = [NSMutableArray array];
+    [self formatDataToClassWith:dict withClassName:fileName withExtensionClassName:extensionName];
+}
+/// 格式化数据中所有字典的类型
+- (void)formatDataToClassWith:(NSDictionary *)dict withClassName:(NSString *)className withExtensionClassName:(NSString *)extensionName {
+    // 创建类
+    ZZClassObject *classObj = ZZClassObject.new;
+    classObj.className = className;
+    // 遍历属性key，确定key值类型
     NSArray *keys = dict.allKeys;
-    NSMutableDictionary *tempDict = [NSMutableDictionary dictionary];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     for (NSString *key in keys) {
-        if ([dict[key] isKindOfClass:[NSString class]]) {
-            tempDict[key] = kkPropertyTypeString;
+        if ([dict[key] isKindOfClass:[NSArray class]]) {
+            // 添加这个属性
+            NSString *name = [self returnNewName:key withExtensionClassName:extensionName];
+            NSString *newName = [NSString stringWithFormat:@"%@+%@",kkPropertyTypeArray,name];
+            [tempDic setObject:newName forKey:key];
+            // 整理数组并返回一个整理好的字典
+            NSDictionary *dicts = [self returnArraysDictionary:dict[key]];
+            // 递归
+            [self formatDataToClassWith:dicts withClassName:name withExtensionClassName:extensionName];
         }else if ([dict[key] isKindOfClass:[NSDictionary class]]) {
-            tempDict[key] = [self analysisPropertyTypeWithDict:(NSDictionary *)dict[key]];
-        }else if ([dict[key] isKindOfClass:[NSArray class]]) {
-            NSMutableArray *array = [NSMutableArray array];
-            for (id obj in (NSArray *)dict[key]) {
-                if ([obj isKindOfClass:[NSDictionary class]]) {
-                    NSDictionary *temp = [self analysisPropertyTypeWithDict:obj];
-                    [array addObject:temp];
-                }
-            }
-            for (int i = 0; i < array.count-1; i++) {
-                NSDictionary *dic1 = array[i];
-                NSDictionary *dic2 = array[i+1];
-                NSArray *samePropertys = [dic1.allKeys returnSamePropertyWithArray:dic2.allKeys];
-                for (NSString *key in samePropertys) {
-                    if (![dic1[key] isEqualToString:dic2[key]]) {
-                        [dic1 setValue:kkPropertyTypeString forKey:key];
-                        [dic2 setValue:kkPropertyTypeString forKey:key];
-                    }
-                }
-            }
-            tempDict[key] = array;
+            // 添加这个属性
+            NSString *name = [self returnNewName:key withExtensionClassName:extensionName];
+            [tempDic setObject:name forKey:key];
+            // 递归
+            [self formatDataToClassWith:dict[key] withClassName:name withExtensionClassName:extensionName];
         }else if ([dict[key] isKindOfClass:[NSNull class]]) {
-            tempDict[key] = kkPropertyTypeNull;
+            [tempDic setObject:kkPropertyTypeNull forKey:key];
+        }else if ([dict[key] isKindOfClass:[NSString class]]) {
+            [tempDic setObject:kkPropertyTypeString forKey:key];
         }else {
             NSString *classDecription = [[dict[key] class] description];
             if ([classDecription containsString:@"NSCFBoolean"]) {
-                tempDict[key] = kkPropertyTypeBool;
+                [tempDic setObject:kkPropertyTypeBool forKey:key];
             }
             if ([classDecription containsString:@"NSCFNumber"]) {
                 if (strcmp([dict[key] objCType], @encode(long)) == 0) {
-                    tempDict[key] = kkPropertyTypeLong;
+                    [tempDic setObject:kkPropertyTypeLong forKey:key];
                 }
                 if (strcmp([dict[key] objCType], @encode(double)) == 0) {
-                    tempDict[key] = kkPropertyTypeDouble;
+                    [tempDic setObject:kkPropertyTypeDouble forKey:key];
                 }
             }
         }
     }
-    return tempDict;
+    // 保存类
+    classObj.classPropertys = tempDic;
+    [self.classObjects addObject:classObj];
 }
 
-/// 格式化数据中所有字典的类型
-- (NSArray *)formatAllDict:(NSDictionary *)dict withFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName {
-    NSDictionary *tempDic = [self analysisPropertyTypeWithDict:dict];
-    self.classNames = [NSMutableArray array];
-    self.classObjects = [NSMutableArray array];
-    NSMutableDictionary *temp = [NSMutableDictionary dictionary];
-    [temp setObject:tempDic forKey:fileName];
-    [self findAllDicWith:temp withClassName:fileName withExtensionClassName:(NSString *)extensionName];
-    return nil;
-}
-
-// 递归找到所有字典，并格式化为类
-- (void)findAllDicWith:(NSDictionary *)dict withClassName:(NSString *)className withExtensionClassName:(NSString *)extensionName {
-    NSArray *keys = dict.allKeys;
-    for (NSString *key in keys) {
-        id object = dict[key];
+#pragma mark custom tools
+/// 合并数组中所有字典，并判断在属性相同时，类型是否一致。（只考虑数组中的字典，会扔掉数组中其他元素（正在完善中。。。））
+- (NSDictionary *)returnArraysDictionary:(NSArray *)array {
+    // 过滤掉不是字典的值
+    NSMutableArray *dictArray = [NSMutableArray array];
+    NSMutableArray *otherArray = [NSMutableArray array];
+    for (id object in array) {
         if ([object isKindOfClass:[NSDictionary class]]) {
-            // 这是个 类
-            ZZClassObject *classObj = [[ZZClassObject alloc] init];
-            classObj.className = className;
-            // 格式化属性与类型
-            NSString *tclassName = @"";
-            NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:object];
-            for (NSString *tkey in tempDic.allKeys) {
-                if ([tempDic[tkey] isKindOfClass:[NSDictionary class]]) {
-                    NSString *temp = [NSString stringWithFormat:@"%@_%@",tkey,extensionName];
-                    tclassName = [self returnNewName:temp];
-                    [tempDic setObject:tclassName forKey:tkey];
-                }
-            }
-            classObj.classPropertys = tempDic;
-            [self.classObjects addObject:classObj];
-            // 递归
-            [self findAllDicWith:object withClassName:tclassName withExtensionClassName:(NSString *)extensionName];
+            [dictArray addObject:object];
+        }else {
+#warning 数组中的非字典元素（只考虑数组中的字典，会扔掉数组中其他元素（正在完善中。。。））
+            [otherArray addObject:object];
         }
-        if ([object isKindOfClass:[NSArray class]]) {
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            for (id obj in object) {
-                if ([obj isKindOfClass:[NSDictionary class]]) {
-                    [dict addEntriesFromDictionary:obj];
-                }
-            }
-            ZZClassObject *classObj = [[ZZClassObject alloc] init];
-            classObj.className = [NSString stringWithFormat:@"%@_%@",key,extensionName];
-            // 格式化属性与类型
-            NSString *tclassName = @"";
-            NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:dict];
-            for (NSString *tkey in tempDic.allKeys) {
-                if ([tempDic[tkey] isKindOfClass:[NSDictionary class]]) {
-                    NSString *temp = [NSString stringWithFormat:@"%@_%@",tkey,extensionName];
-                    tclassName = [self returnNewName:temp];
-                    [tempDic setObject:tclassName forKey:tkey];
-                }
-            }
-            classObj.classPropertys = tempDic;
-            [self.classObjects addObject:classObj];
-            // 递归
-            [self findAllDicWith:dict withClassName:tclassName withExtensionClassName:(NSString *)extensionName];
+    }
+    // 合并数组中所有字典
+    NSMutableDictionary *allDicts = [NSMutableDictionary dictionary];
+    for (NSDictionary *dict in dictArray) {
+        [allDicts addEntriesFromDictionary:dict];
+    }
+    // 找到数组中所有字典相同的key
+    NSArray *sameKeys = @[];
+    if (dictArray.count > 1) {
+        for (int i = 0; i < dictArray.count-1; i++) {
+            NSDictionary *dic1 = dictArray[i];
+            NSDictionary *dic2 = dictArray[i+1];
+            sameKeys = [self returnDictionaryTheSameKeyWithA:dic1.allKeys withB:dic2.allKeys];
         }
-        
+    }
+    // 判断这些key在所有字典中的值的类型是否一致
+    for (NSDictionary *dict in dictArray) {
+        for (NSString *sameKey in sameKeys) {
+            id obja = allDicts[sameKey];
+            id objb = dict[sameKey];
+            NSString *class1 = [[obja class] description];
+            NSString *class2 = [[objb class] description];
+            if (![class1 isEqualToString:class2]) {
+                [allDicts setObject:kkPropertyTypeString forKey:sameKey];
+            }
+        }
+    }
+    return allDicts;
+}
+
+/// 返回数组中所有字典相同的key，需要判断这些相同的key类型是否一致。
+- (NSArray *)returnDictionaryTheSameKeyWithA:(NSArray *)a withB:(NSArray *)b {
+    NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF IN %@", b];
+    return [a filteredArrayUsingPredicate:pre];
+}
+
+/// 返回 object 类型
+- (NSString *)returnPropertyType:(id)object {
+    if ([object isKindOfClass:[NSNull class]]) {
+        return kkPropertyTypeNull;
+    }else if ([object isKindOfClass:[NSString class]]) {
+        return kkPropertyTypeString;
+    }else if ([object isKindOfClass:[NSDictionary class]]) {
+        return kkPropertyTypeDictionary;
+    }else if ([object isKindOfClass:[NSArray class]]) {
+        return kkPropertyTypeArray;
+    }else {
+        NSString *classDecription = [[object class] description];
+        if ([classDecription containsString:@"NSCFBoolean"]) {
+            return kkPropertyTypeBool;
+        }else if ([classDecription containsString:@"NSCFNumber"]) {
+            if (strcmp([object objCType], @encode(long)) == 0) {
+                return kkPropertyTypeLong;
+            }else if (strcmp([object objCType], @encode(double)) == 0) {
+                return kkPropertyTypeDouble;
+            }else {
+                return kkPropertyTypeOther;
+            }
+        }else {
+            return kkPropertyTypeOther;
+        }
     }
 }
 
-- (NSString *)returnNewName:(NSString *)key {
-    while ([self.classNames containsObject:key]) {
-        key = [NSString stringWithFormat:@"%@_%@",@"z",key];
+/// 预防类名重复
+- (NSString *)returnNewName:(NSString *)key withExtensionClassName:(NSString *)extensionName{
+    NSString *newKey = [NSString stringWithFormat:@"%@_%@",key,extensionName];
+    while ([self.classNames containsObject:newKey]) {
+        newKey = [NSString stringWithFormat:@"%@_%@",@"z",newKey];
     }
-    [self.classNames addObject:key];
-    return key;
+    [self.classNames addObject:newKey];
+    return newKey;
+}
+
+/// 合并数组并去重
+- (NSArray *)arrayA:(NSArray *)a withArrayB:(NSArray *)b {
+    NSMutableArray *temp = [a mutableCopy];
+    for (id object in b) {
+        if (![a containsObject:object]) {
+            [temp addObject:object];
+        }
+    }
+    return [temp copy];
+}
+
+#pragma mark - .h
+/// 返回 .h 文件的内容
+- (NSString *)returnHStringWithFileName:(NSString *)fileName {
+    // 准备返回 .h
+    NSString *string = @"#import <Foundation/Foundation.h>";
+    for (ZZClassObject *classObj in self.classObjects) {
+        NSString *temp = [self hStringWithClassObject:classObj];
+        string = [NSString stringWithFormat:@"%@\n\n%@",string,temp];
+    }
+    
+    string = [string stringByReplacingOccurrencesOfString:fileName.zzFormatClassName withString:fileName];
+    return string;
 }
 
 ///  .h文件拼接元素
@@ -195,60 +241,52 @@
                 NSString *className = ((NSString *)object).zzFormatClassName;
                 temp = [NSString stringWithFormat:@"@property (nonatomic,strong) %@ *%@;",className,propertyName];
             }
-        }
-        if ([object isKindOfClass:[NSArray class]]) {
-            temp = [NSString stringWithFormat:@"@property (nonatomic,strong) NSArray *%@;",propertyName];
+            if ([object hasPrefix:kkPropertyTypeArray]) {
+                NSString *className = [(NSString *)object substringFromIndex:kkPropertyTypeArray.length+1];
+                temp = [NSString stringWithFormat:@"@property (nonatomic,strong) NSArray<%@ *> *%@;",className.zzFormatClassName,propertyName];
+            }
         }
         classString = [NSString stringWithFormat:@"%@\n%@",classString,temp];
     }
     return [NSString stringWithFormat:@"%@\n@end",classString];
 }
 
-/// 返回 .h 文件的内容
-- (NSString *)returnHStringWithFileName:(NSString *)fileName {
-    // 准备返回 .h
-    NSString *string = @"#import <Foundation/Foundation.h>";
-    for (NSInteger i = self.classObjects.count-1; i >= 0; i--) {
-        ZZClassObject *classObj = self.classObjects[i];
-        NSString *temp = [self hStringWithClassObject:classObj];
-        string = [NSString stringWithFormat:@"%@\n\n%@",string,temp];
-    }
-    string = [string stringByReplacingOccurrencesOfString:fileName.zzFormatClassName withString:fileName];
-    return string;
-}
 
 #pragma mark - .m
 /// 返回 .m 文件的内容
 - (NSString *)returnMStringWithFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName{
     // 准备返回 .m
     NSString *string = [NSString stringWithFormat:@"#import \"%@.h\"",fileName];
-    for (NSInteger i = self.classObjects.count-1; i >= 0; i--) {
-        ZZClassObject *classObj = self.classObjects[i];
+    for (ZZClassObject *classObj in self.classObjects) {
         NSString *temp = [self mStringWithClassObject:classObj withExtensionClassName:(NSString *)extensionName];
         string = [NSString stringWithFormat:@"%@\n\n%@",string,temp];
     }
+    
     string = [string stringByReplacingOccurrencesOfString:fileName.zzFormatClassName withString:fileName];
     return string;
 }
 
+///  .m文件拼接类
 - (NSString *)mStringWithClassObject:(ZZClassObject *)classObj withExtensionClassName:(NSString *)extensionName{
     NSString *stringa = @"+ (NSDictionary *)modelCustomPropertyMapper {\n    return @{";
     NSString *stringb = @"};\n}\n";
     NSString *stringc = @"+ (NSDictionary *)modelContainerPropertyGenericClass {\n    return @{";
     NSString *stringd = @"};\n}\n";
-    // modelCustomPropertyMapper
+    // YYModel modelCustomPropertyMapper
     NSString *string = @"";
-    // modelContainerPropertyGenericClass
+    // YYModel modelContainerPropertyGenericClass
     NSString *strings = @"";
     // 解析
     NSArray *keys = classObj.classPropertys.allKeys;
     for (NSString *key in keys) {
-        id object = classObj.classPropertys[key];
+        // 自定义的属性名
         if (![key isEqualToString:key.zzFormatPropertyName]) {
             string = [NSString stringWithFormat:@"%@ @\"%@\" : @\"%@\",",string,key.zzFormatPropertyName,key];
         }
-        if ([object isKindOfClass:[NSArray class]]) {
-            NSString *className = [NSString stringWithFormat:@"%@_%@",key,extensionName];
+        // 数组中类（泛型）
+        id object = classObj.classPropertys[key];
+        if ([object hasPrefix:kkPropertyTypeArray]) {
+            NSString *className = [(NSString *)object substringFromIndex:kkPropertyTypeArray.length+1];
             strings = [NSString stringWithFormat:@"%@ @\"%@\" : [%@ class],",strings,key.zzFormatPropertyName,className.zzFormatClassName];
         }
     }

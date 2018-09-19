@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *const kkPropertyTypeString = @"kkNSString";
-static NSString *const kkPropertyTypeArray = @"kkNSArray";
-static NSString *const kkPropertyTypeDictionary = @"kkNSDictionary";
-static NSString *const kkPropertyTypeDouble = @"kkDouble";
-static NSString *const kkPropertyTypeLong = @"kkNSInteger";
-static NSString *const kkPropertyTypeBool = @"kkBOOL";
-static NSString *const kkPropertyTypeNull = @"kkNull";
-static NSString *const kkPropertyTypeOther = @"kkOther";
+static NSString *const kkPropertyTypeString = @"kkZZMonsterNSString";
+static NSString *const kkPropertyTypeArray = @"kkZZMonsterNSArray";
+static NSString *const kkPropertyTypeDictionary = @"kkZZMonsterNSDictionary";
+static NSString *const kkPropertyTypeDouble = @"kkZZMonsterDouble";
+static NSString *const kkPropertyTypeLong = @"kkZZMonsterNSInteger";
+static NSString *const kkPropertyTypeBool = @"kkZZMonsterBOOL";
+static NSString *const kkPropertyTypeNull = @"kkZZMonsterNull";
+static NSString *const kkPropertyTypeOther = @"kkZZMonsterOther";
 
 @interface ZZClassObject : NSObject
 @property (nonatomic,copy  ) NSString *className;
@@ -40,7 +40,7 @@ static NSString *const kkPropertyTypeOther = @"kkOther";
 - (NSString *)returnMStringWithFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName;
 
 /// 格式化数据中所有字典的类型
-- (NSArray *)formatAllDict:(NSDictionary *)dict withFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName;
+- (void)willFormat:(NSDictionary *)dict withFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName;
 
 @end
 
