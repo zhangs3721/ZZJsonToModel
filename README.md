@@ -5,7 +5,7 @@
 ### 示例：
 
 ### 1.下载[ZZMonster](https://github.com/zhangs3721/ZZMonster)并导入项目中。ZZMonster目录：
-![ZZMonster目录](https://upload-images.jianshu.io/upload_images/5173163-fcc920092694e199.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![ZZMonster目录](https://upload-images.jianshu.io/upload_images/5173163-5e81d033c36d52cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 2.导入头文件 `#import "ZZWriter.h"`，调用此方法：
 
