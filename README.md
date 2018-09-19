@@ -1,7 +1,7 @@
 # iOS自动生成Model（ZZJsonToModel兼容YYModel）
 
 * 纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json转Model。（兼容[YYModel](https://github.com/ibireme/YYModel)）
-* 如果 ZZJsonToModel 为您节约了时间，您的**🌟星星**是我改bug的动力，谢谢🙏🙏🙏
+* 如果 ZZJsonToModel 为您节约了时间，您的**🌟星星**是我优化项目的动力，谢谢🙏🙏🙏
 * 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526/13146615588）。
 
 ## 示例：
@@ -51,11 +51,11 @@
 * 4.项目不同.h文件中类名相同会引发报错，类名并不会污染数据，建议加上类名后缀。（随机字符串也可以）
 
 
-## 使用ZZMonster概要
-### 1.下载[ZZJsonToModel](https://github.com/zhangs3721/ZZJsonToModel)并导入项目中。ZZMonster目录：
-![ZZMonster目录](https://upload-images.jianshu.io/upload_images/5173163-5e81d033c36d52cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+## 使用ZZJsonToModel概要
+### 1.下载[ZZJsonToModel](https://github.com/zhangs3721/ZZJsonToModel)并导入项目中。ZZJsonToModel目录：
+![ZZJsonToModel 目录](https://upload-images.jianshu.io/upload_images/5173163-ba26e943e5895742.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 2.导入头文件 `#import "ZZWriter.h"`，调用此方法：
+### 2.导入头文件 `#import "ZZJsonToModel.h"`，调用此方法
 
 ```objectivec
 /*  调用方法
@@ -69,15 +69,16 @@
 
 ```
 如图：
-![调用主方法](https://upload-images.jianshu.io/upload_images/5173163-413ef5aa4ba27598.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![调用主方法](https://upload-images.jianshu.io/upload_images/5173163-a70a2c84b27a75f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 3.导入生成好的model文件：
+### 3.导入生成好的model文件
 
-![导入生成好的model文件](https://upload-images.jianshu.io/upload_images/5173163-0364861d3c9bc845.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![导入生成好的model文件](https://upload-images.jianshu.io/upload_images/5173163-b095b8d8e90d2926.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 4.引用.h `#import "BaseModel.h"`后，使用YYModel。
+### 4.引用.h `#import "TestModel.h"`后，使用YYModel
 
-![引用.h `#import "BaseModel.h"`后，使用YYModel](https://upload-images.jianshu.io/upload_images/5173163-2ec79e2304084259.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![引用.h `#import "BaseModel.h"`后，使用YYModel](https://upload-images.jianshu.io/upload_images/5173163-daa4306a7da6c189.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+**此时 model 已可用，so easy ，记得点🌟星星，谢谢🙏🙏🙏**
 
 
