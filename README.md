@@ -77,7 +77,7 @@
 
 ### 4.引用.h `#import "TestModel.h"`后，使用YYModel
 
-![引用.h `#import "BaseModel.h"`后，使用YYModel](https://upload-images.jianshu.io/upload_images/5173163-daa4306a7da6c189.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![引用.h 后，使用YYModel](https://upload-images.jianshu.io/upload_images/5173163-daa4306a7da6c189.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **此时 model 已可用，so easy ，记得点🌟星星，谢谢🙏🙏🙏**
 
