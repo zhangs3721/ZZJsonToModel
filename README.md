@@ -1,8 +1,8 @@
 # iOS自动生成Model（ZZJsonToModel兼容YYModel）
 
-纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json转Model。（兼容[YYModel](https://github.com/ibireme/YYModel)）
-
-如果 ZZJsonToModel 为您节约了时间，您的星星是我改bug的动力，谢谢🙏🙏🙏
+* 纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json转Model。（兼容[YYModel](https://github.com/ibireme/YYModel)）
+* 如果 ZZJsonToModel 为您节约了时间，您的星星是我改bug的动力，谢谢🙏🙏🙏
+* 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526/13146615588）。
 
 ## 示例：
 ### json示例：
