@@ -1,4 +1,4 @@
-# iOS自动生成Model（ZZJsonToModel(ZZMonster)兼容YYModel）
+# iOS自动生成Model（ZZJsonToModel/ZZMonster兼容YYModel）
 
 纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json转Model。（兼容[YYModel](https://github.com/ibireme/YYModel)）
 
