@@ -1,25 +1,17 @@
-//
-//  ZZWriter.m
-//  ZZMonster
-//
-//  Created by zhang on 2018/9/10.
-//  Copyright © 2018年 zhangs. All rights reserved.
-//
-
-#import "ZZWriter.h"
+#import "ZZJsonToModel.h"
 #import "NSString+ZZFormat.h"
 
-@interface ZZWriter ()
+@interface ZZJsonToModel ()
 @property (nonatomic, strong) NSMutableArray *classObjects;
 @property (nonatomic, strong) NSMutableArray *classNames;
 @end
 
-@implementation ZZWriter
+@implementation ZZJsonToModel
 
 /// 写入文件
 + (void)writeClassObjectsWithFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName withJson:(NSDictionary *)json toFileURL:(NSURL *)url error:(NSError **)error {
     
-    ZZWriter *writer = ZZWriter.new;
+    ZZJsonToModel *writer = ZZJsonToModel.new;
     // 整理出所有存在的类及类型
     [writer willFormat:json withFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName];
     

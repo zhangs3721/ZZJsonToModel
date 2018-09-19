@@ -1,11 +1,3 @@
-//
-//  ZZWriter.h
-//  ZZMonster
-//
-//  Created by zhang on 2018/9/10.
-//  Copyright © 2018年 zhangs. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 
 static NSString *const kkPropertyTypeString = @"kkZZMonsterNSString";
@@ -22,9 +14,10 @@ static NSString *const kkPropertyTypeOther = @"kkZZMonsterOther";
 @property (nonatomic,strong) NSDictionary *classPropertys;
 @end
 
-@interface ZZWriter : NSObject
+@interface ZZJsonToModel : NSObject
 
-/*  调用方法
+#pragma mark 主方法一个就够了
+/*  调用方法 -- main
  *  FileName: 文件名
  *  ExtensionClassName: 为预防自动生成的类名重复。例Authors类后加后缀->AuthorsClass，不会污染数据。
  *  Json: 请求到的json，默认是（NSDictionary *）json。
@@ -32,7 +25,9 @@ static NSString *const kkPropertyTypeOther = @"kkZZMonsterOther";
  *  error: 生成文件发生错误
  */
 + (void)writeClassObjectsWithFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName  withJson:(NSDictionary *)json toFileURL:(NSURL *)url error:(NSError **)error;
+#pragma mark -
 
+///
 /// 返回 .h 文件的内容
 - (NSString *)returnHStringWithFileName:(NSString *)fileName;
 

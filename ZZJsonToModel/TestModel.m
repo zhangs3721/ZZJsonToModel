@@ -1,4 +1,4 @@
-#import "BaseModel.h"
+#import "TestModel.h"
 
 @implementation ImagesClass
 + (NSDictionary *)modelCustomPropertyMapper {
@@ -90,7 +90,7 @@
 @implementation EntityListClass
 @end
 
-@implementation BaseModel
+@implementation TestModel
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{ @"isLastPage" : @"is_last_page", @"entityList" : @"entity_list",};
 }

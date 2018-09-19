@@ -1,8 +1,8 @@
 //
 //  AppDelegate.h
-//  ZZMonster
+//  ZZJsonToModel
 //
-//  Created by zhang on 2018/9/6.
+//  Created by zhang on 2018/9/19.
 //  Copyright © 2018年 zhangs. All rights reserved.
 //
 

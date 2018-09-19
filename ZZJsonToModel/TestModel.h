@@ -155,7 +155,7 @@
 @property (nonatomic,strong) MeowClass *meow;
 @end
 
-@interface BaseModel : NSObject
+@interface TestModel : NSObject
 @property (nonatomic,copy  ) NSString *start;
 @property (nonatomic,assign) BOOL isLastPage;
 @property (nonatomic,strong) NSArray<EntityListClass *> *entityList;
