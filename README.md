@@ -1,4 +1,4 @@
-# ZZMonster（兼容YYModel）
+# iOS自动生成Model（ZZJsonToModel(ZZMonster)兼容YYModel）
 
 纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json转Model。（兼容[YYModel](https://github.com/ibireme/YYModel)）
 
@@ -50,7 +50,7 @@
 
 
 ## 使用ZZMonster概要
-### 1.下载[ZZMonster](https://github.com/zhangs3721/ZZMonster)并导入项目中。ZZMonster目录：
+### 1.下载[ZZJsonToModel](https://github.com/zhangs3721/ZZMonster)并导入项目中。ZZMonster目录：
 ![ZZMonster目录](https://upload-images.jianshu.io/upload_images/5173163-5e81d033c36d52cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 2.导入头文件 `#import "ZZWriter.h"`，调用此方法：
