@@ -8,6 +8,8 @@
 
 @implementation ZZJsonToModel
 
+static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/zhangs3721/ZZJsonToModel )\n// 纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json转Model。\n// 如果 ZZJsonToModel 为您节约了时间，您的**🌟星星**是我优化项目的动力，谢谢🙏🙏🙏\n// 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526/13146615588）。\n\n";
+
 /// 写入文件
 + (void)writeClassObjectsWithFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName withJson:(NSDictionary *)json toFileURL:(NSURL *)url error:(NSError **)error {
     
@@ -191,7 +193,7 @@
 /// 返回 .h 文件的内容
 - (NSString *)returnHStringWithFileName:(NSString *)fileName {
     // 准备返回 .h
-    NSString *string = @"#import <Foundation/Foundation.h>";
+    NSString *string = [NSString stringWithFormat:@"%@%@",headerString,@"#import <Foundation/Foundation.h>"];
     for (ZZClassObject *classObj in self.classObjects) {
         NSString *temp = [self hStringWithClassObject:classObj];
         string = [NSString stringWithFormat:@"%@\n\n%@",string,temp];
@@ -248,7 +250,7 @@
 /// 返回 .m 文件的内容
 - (NSString *)returnMStringWithFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName{
     // 准备返回 .m
-    NSString *string = [NSString stringWithFormat:@"#import \"%@.h\"",fileName];
+    NSString *string = [NSString stringWithFormat:@"%@#import \"%@.h\"",headerString,fileName];
     for (ZZClassObject *classObj in self.classObjects) {
         NSString *temp = [self mStringWithClassObject:classObj withExtensionClassName:(NSString *)extensionName];
         string = [NSString stringWithFormat:@"%@\n\n%@",string,temp];

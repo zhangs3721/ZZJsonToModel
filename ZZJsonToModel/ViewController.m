@@ -15,7 +15,7 @@
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
     NSLog(@"获取json");
     // 2.生成文件存放的路径
-    NSURL *path = [NSURL URLWithString:@"/Users/zhang/Desktop/ZZMonster/ZZJsonToModel"];
+    NSURL *path = [NSURL URLWithString:@"/Users/zhang/Desktop/ZZJsonToModel/ZZJsonToModel"];
     
     /*  3.调用方法
      *  FileName: 文件名
