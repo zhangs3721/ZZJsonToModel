@@ -33,7 +33,7 @@
 @property (nonatomic,copy  ) NSString *two;
 @end
 
-@interface TestModel : NSObject
+@interface test : NSObject
 @property (nonatomic,strong) NSArray<PagesClass *> *pages;
 @property (nonatomic,strong) AuthorClass *author;
 @property (nonatomic,copy  ) NSString *bookName;

@@ -6,6 +6,10 @@
 
 #import <Foundation/Foundation.h>
 
+#define ZZJsonToModelDeprecated(instead) __attribute__((deprecated(instead)))
+typedef void(^Error)(NSError *error);
+typedef void(^DoSth)(void);
+
 static NSString *const kkPropertyTypeString = @"kkZZMonsterNSString";
 static NSString *const kkPropertyTypeArray = @"kkZZMonsterNSArray";
 static NSString *const kkPropertyTypeDictionary = @"kkZZMonsterNSDictionary";
@@ -23,17 +27,38 @@ static NSString *const kkPropertyTypeOther = @"kkZZMonsterOther";
 @interface ZZJsonToModel : NSObject
 
 #pragma mark 主方法一个就够了
-/*  调用方法 -- main
- *  FileName: 文件名
- *  ExtensionClassName: 为预防自动生成的类名重复。例Authors类后加后缀->AuthorsClass，不会污染数据。
- *  Json: 请求到的json，默认是（NSDictionary *）json。
- *  URL: 生成文件存放的路径。
- *  error: 生成文件发生错误
+/**
+ 调用方法 -- main
+
+ @param fileName 文件名
+ @param extensionName 为预防自动生成的类名重复。例Authors类后加后缀->AuthorsClass，不会污染数据。
+ @param json 请求到的json，默认是（NSDictionary *）json。
+ @param url 生成文件存放的路径。
+ @param error 生成文件发生错误
  */
-+ (void)writeClassObjectsWithFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName  withJson:(NSDictionary *)json toFileURL:(NSURL *)url error:(NSError **)error;
++ (void)writeClassObjectsWithFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName  withJson:(NSDictionary *)json toFileURL:(NSURL *)url error:(NSError **)error ZZJsonToModelDeprecated("请使用modelWithFileName:extensionName:json:fileURL:error:");
+
+/**
+ 调用方法 -- main
+ 
+ @param fileName 生成文件的文件名
+ @param extensionName 为预防自动生成的类名重复。例Authors类后加后缀->AuthorsClass，不会污染数据
+ @param json 请求到的json，传入类型默认是（NSDictionary *）json
+ @param url 生成文件存放的路径
+ @param error 生成文件发生错误
+ @return 是否成功生成文件
+ */
++ (BOOL)modelWithFileName:(NSString *)fileName extensionName:(NSString *)extensionName json:(NSDictionary *)json fileURL:(NSURL *)url error:(Error)error;
+
+/**
+ 计算代码耗时
+
+ @param doSth 代码块
+ @return 耗时
+ */
++ (double)modelWithSpendTime:(DoSth)doSth;
 #pragma mark -
 
-///
 /// 返回 .h 文件的内容
 - (NSString *)returnHStringWithFileName:(NSString *)fileName;
 
