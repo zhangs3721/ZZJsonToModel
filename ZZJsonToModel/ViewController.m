@@ -16,7 +16,7 @@
     // 3.调用方法
     __block BOOL isSuccess = NO;
     double times = [ZZJsonToModel modelWithSpendTime:^{ // 计算代码耗时
-        isSuccess = [ZZJsonToModel modelWithFileName:@"test" extensionName:@"class" json:json fileURL:path error:^(NSError *error) {
+        isSuccess = [ZZJsonToModel modelWithFileName:@"TestModel" extensionName:@"class" json:json fileURL:path error:^(NSError *error) {
             NSLog(@"error = %@",error.localizedDescription);
         }];
     }];
