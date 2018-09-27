@@ -17,34 +17,40 @@
 static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/zhangs3721/ZZJsonToModel )\n// 纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json转Model。\n// 如果 ZZJsonToModel 为您节约了时间，您的**🌟星星**是我优化项目的动力，谢谢🙏🙏🙏\n// 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526/13146615588）。\n\n";
 
 + (BOOL)modelWithFileName:(NSString *)fileName extensionName:(NSString *)extensionName json:(NSDictionary *)json fileURL:(NSURL *)url error:(Error)error {
-    ZZJsonToModel *writer = ZZJsonToModel.new;
-    // 整理出所有存在的类及类型
-    [writer willFormat:json withFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName];
-    // 输出.h
-    NSError *errors = nil;
-    NSString *hFilename = [NSString stringWithFormat:@"%@.h", fileName];
-    NSString *outputHFile = [writer returnHStringWithFileName:fileName];
-    [outputHFile writeToFile:[[url URLByAppendingPathComponent:hFilename] absoluteString]
-                  atomically:YES
-                    encoding:NSUTF8StringEncoding
-                       error:&errors];
-    if (!errors) {
-        // 输出.m
-        NSString *mFilename = [NSString stringWithFormat:@"%@.m", fileName];
-        NSString *outputMFile = [writer returnMStringWithFileName:fileName withExtensionClassName:(NSString *)extensionName];
-        [outputMFile writeToFile:[[url URLByAppendingPathComponent:mFilename] absoluteString]
+#warning 此地址为 mac 文件夹地址，地址错误报错为 The folder “XXX.h” doesn’t exist.（暂时仅支持模拟器生成 model 文件，正在完善中。。。）
+    if (!TARGET_IPHONE_SIMULATOR) {
+        NSLog(@"暂时仅支持模拟器生成 model 文件，正在完善中。。。");
+        return NO;
+    }else {
+        ZZJsonToModel *writer = ZZJsonToModel.new;
+        // 整理出所有存在的类及类型
+        [writer willFormat:json withFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName];
+        // 输出.h
+        NSError *errors = nil;
+        NSString *hFilename = [NSString stringWithFormat:@"%@.h", fileName];
+        NSString *outputHFile = [writer returnHStringWithFileName:fileName];
+        [outputHFile writeToFile:[[url URLByAppendingPathComponent:hFilename] absoluteString]
                       atomically:YES
                         encoding:NSUTF8StringEncoding
                            error:&errors];
-        if (errors){
+        if (!errors) {
+            // 输出.m
+            NSString *mFilename = [NSString stringWithFormat:@"%@.m", fileName];
+            NSString *outputMFile = [writer returnMStringWithFileName:fileName withExtensionClassName:(NSString *)extensionName];
+            [outputMFile writeToFile:[[url URLByAppendingPathComponent:mFilename] absoluteString]
+                          atomically:YES
+                            encoding:NSUTF8StringEncoding
+                               error:&errors];
+            if (errors){
+                error(errors);
+                return NO;
+            }else {
+                return YES;
+            }
+        }else {
             error(errors);
             return NO;
-        }else {
-            return YES;
         }
-    }else {
-        error(errors);
-        return NO;
     }
 }
 
