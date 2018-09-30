@@ -2,7 +2,7 @@
 
 * 纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json生成Model文件。（兼容[YYModel](https://github.com/ibireme/YYModel),[MJExtension](https://github.com/CoderMJLee/MJExtension)）
 * 如果 ZZJsonToModel 为您节约了时间，您的**🌟星星**是我优化项目的动力，谢谢🙏🙏🙏
-* 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526/13146615588）。
+* 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526）。
 
 ## 示例：
 ### json示例：
