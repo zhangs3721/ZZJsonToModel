@@ -6,36 +6,36 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AuthorsClass : NSObject
+@interface AuthorsMjClass : NSObject
 @property (nonatomic,assign) double author;
 @end
 
-@interface ZAuthorClass : NSObject
-@property (nonatomic,strong) AuthorsClass *authors;
+@interface ZAuthorMjClass : NSObject
+@property (nonatomic,strong) AuthorsMjClass *authors;
 @property (nonatomic,copy  ) NSString *author;
 @end
 
-@interface AuthorClass : NSObject
+@interface AuthorMjClass : NSObject
 @property (nonatomic,assign) BOOL bools;
-@property (nonatomic,strong) ZAuthorClass *author;
+@property (nonatomic,strong) ZAuthorMjClass *author;
 @end
 
-@interface PagesClass : NSObject
+@interface PagesMjClass : NSObject
 @end
 
-@interface IdClass : NSObject
+@interface IdMjClass : NSObject
 @property (nonatomic,copy  ) NSString *zzid;
 @end
 
-@interface BookInfoClass : NSObject
+@interface BookInfoMjClass : NSObject
 @property (nonatomic,copy  ) NSString *one;
-@property (nonatomic,strong) IdClass *ID;
+@property (nonatomic,strong) IdMjClass *ID;
 @property (nonatomic,copy  ) NSString *two;
 @end
 
-@interface TestModel : NSObject
-@property (nonatomic,strong) NSArray<PagesClass *> *pages;
-@property (nonatomic,strong) AuthorClass *author;
+@interface ZZTestModel : NSObject
+@property (nonatomic,strong) NSArray<PagesMjClass *> *pages;
+@property (nonatomic,strong) AuthorMjClass *author;
 @property (nonatomic,copy  ) NSString *bookName;
-@property (nonatomic,strong) NSArray<BookInfoClass *> *bookInfo;
+@property (nonatomic,strong) NSArray<BookInfoMjClass *> *bookInfo;
 @end

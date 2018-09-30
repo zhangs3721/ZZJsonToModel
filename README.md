@@ -1,6 +1,6 @@
-# iOS自动生成Model（ZZJsonToModel兼容YYModel）
+# iOS Json自动生成Model文件（ZZJsonToModel兼容YYModel,MJExtension）
 
-* 纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json转Model。（兼容[YYModel](https://github.com/ibireme/YYModel)）
+* 纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json生成Model文件。（兼容[YYModel](https://github.com/ibireme/YYModel),[MJExtension](https://github.com/CoderMJLee/MJExtension)）
 * 如果 ZZJsonToModel 为您节约了时间，您的**🌟星星**是我优化项目的动力，谢谢🙏🙏🙏
 * 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526/13146615588）。
 
@@ -32,8 +32,8 @@
 }
 ```
 
-生成model图：
-![生成model图](https://upload-images.jianshu.io/upload_images/5173163-f81d1de1e64b9a1d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+生成 YYModel 图：
+![生成 YYModel 图](https://upload-images.jianshu.io/upload_images/5173163-f81d1de1e64b9a1d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 **注：** 示例的json中，有几点特殊。
@@ -58,18 +58,16 @@
 ### 2.导入头文件 `#import "ZZJsonToModel.h"`，调用此方法
 
 ```objectivec
-/*  调用方法
- *  FileName: 文件名
- *  ExtensionClassName: 为预防自动生成的类名重复。例Authors类后加后缀->AuthorsClass，不会污染数据。
- *  Json: 请求到的json，默认是（NSDictionary *）json。
- *  URL: 生成文件存放的路径。
- *  error: 生成文件发生错误
- */
-+ (void)writeClassObjectsWithFileName:(NSString *)fileName withExtensionClassName:(NSString *)extensionName  withJson:(NSDictionary *)json toFileURL:(NSURL *)url error:(NSError **)error;
+
+/// 生成 YYModel‘s model 调用方法
++ (BOOL)zz_createYYModelWithJson:(NSDictionary *)json fileName:(NSString *)fileName extensionName:(NSString *)extensionName fileURL:(NSURL *)url error:(Error)error;
+
+/// 生成 MJExtension‘s model 调用方法
++ (BOOL)zz_createMJModelWithJson:(NSDictionary *)json fileName:(NSString *)fileName extensionName:(NSString *)extensionName fileURL:(NSURL *)url error:(Error)error;
 
 ```
 如图：
-![调用主方法](https://upload-images.jianshu.io/upload_images/5173163-a70a2c84b27a75f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![调用主方法](https://upload-images.jianshu.io/upload_images/5173163-207318f547a7f185.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 3.导入生成好的model文件
 

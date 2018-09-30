@@ -4,34 +4,34 @@
 // 如果 ZZJsonToModel 为您节约了时间，您的**🌟星星**是我优化项目的动力，谢谢🙏🙏🙏
 // 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526）。
 
-#import "TestModel.h"
+#import "ZZTestModel.h"
 
-@implementation AuthorsClass
+@implementation AuthorsMjClass
 @end
 
-@implementation ZAuthorClass
+@implementation ZAuthorMjClass
 @end
 
-@implementation AuthorClass
+@implementation AuthorMjClass
 @end
 
-@implementation PagesClass
+@implementation PagesMjClass
 @end
 
-@implementation IdClass
+@implementation IdMjClass
 @end
 
-@implementation BookInfoClass
-+ (NSDictionary *)modelCustomPropertyMapper {
+@implementation BookInfoMjClass
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{ @"ID" : @"id",};
 }
 @end
 
-@implementation TestModel
-+ (NSDictionary *)modelCustomPropertyMapper {
+@implementation ZZTestModel
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{ @"bookName" : @"book_name", @"bookInfo" : @"book_info",};
 }
-+ (NSDictionary *)modelContainerPropertyGenericClass {
-    return @{ @"pages" : [PagesClass class], @"bookInfo" : [BookInfoClass class],};
++ (NSDictionary *)mj_objectClassInArray {
+    return @{ @"pages" : [PagesMjClass class], @"bookInfo" : [BookInfoMjClass class],};
 }
 @end

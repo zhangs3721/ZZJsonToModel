@@ -2,7 +2,7 @@
 // ZZJsonToModel(GitHub:https://github.com/zhangs3721/ZZJsonToModel )
 // 纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json转Model。
 // 如果 ZZJsonToModel 为您节约了时间，您的**🌟星星**是我优化项目的动力，谢谢🙏🙏🙏
-// 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526/13146615588）。
+// 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526）。
 
 #import "ZZJsonToModel.h"
 #import "NSString+ZZFormat.h"
@@ -14,7 +14,43 @@
 
 @implementation ZZJsonToModel
 
-static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/zhangs3721/ZZJsonToModel )\n// 纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json转Model。\n// 如果 ZZJsonToModel 为您节约了时间，您的**🌟星星**是我优化项目的动力，谢谢🙏🙏🙏\n// 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526/13146615588）。\n\n";
+/// YYModel ?  MJExtension ?
+static ZZJsonToModelToType modelToType;
+
+static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/zhangs3721/ZZJsonToModel )\n// 纯代码编写，无需安装任何插件，一个方法轻松搞定复杂Json转Model。\n// 如果 ZZJsonToModel 为您节约了时间，您的**🌟星星**是我优化项目的动力，谢谢🙏🙏🙏\n// 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526）。\n\n";
+
++ (BOOL)zz_createYYModelWithJson:(NSDictionary *)json fileName:(NSString *)fileName extensionName:(NSString *)extensionName fileURL:(NSURL *)url error:(Error)error {
+    if (json){
+        if (fileName.length < 1)fileName = @"ZZTestModel";
+        if (extensionName.length < 1)extensionName = @"yy_class";
+        if (!url){
+            NSLog(@"ZZJsonToModel error : url为nil!");
+            return NO;
+        }else{
+            modelToType = ZZJsonToModelToYYModel;
+            return [ZZJsonToModel modelWithFileName:fileName extensionName:extensionName json:json fileURL:url error:error];
+        }
+    }else{
+        NSLog(@"ZZJsonToModel error : json为nil!");
+        return NO;
+    }
+}
+
++ (BOOL)zz_createMJModelWithJson:(NSDictionary *)json fileName:(NSString *)fileName extensionName:(NSString *)extensionName fileURL:(NSURL *)url error:(Error)error {
+    if (json){
+        if (fileName.length < 1)fileName = @"ZZTestModel";
+        if (extensionName.length < 1)extensionName = @"mj_class";
+        if (!url){
+            NSLog(@"ZZJsonToModel error : url为nil!");
+            return NO;
+        }else{
+            modelToType = ZZJsonToModelToMJExtension;
+            return [ZZJsonToModel modelWithFileName:fileName extensionName:extensionName json:json fileURL:url error:error];
+        }
+    }else{
+        NSLog(@"ZZJsonToModel error : json为nil!");
+        return NO;
+    }}
 
 + (BOOL)modelWithFileName:(NSString *)fileName extensionName:(NSString *)extensionName json:(NSDictionary *)json fileURL:(NSURL *)url error:(Error)error {
 #warning 此地址为 mac 文件夹地址，地址错误报错为 The folder “XXX.h” doesn’t exist.（暂时仅支持模拟器生成 model 文件，正在完善中。。。）
@@ -306,13 +342,21 @@ static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/z
 
 ///  .m文件拼接类
 - (NSString *)mStringWithClassObject:(ZZClassObject *)classObj withExtensionClassName:(NSString *)extensionName{
-    NSString *stringa = @"+ (NSDictionary *)modelCustomPropertyMapper {\n    return @{";
+    NSString *stringa;
+    NSString *stringc;
+    if (modelToType == ZZJsonToModelToYYModel) {
+        stringa = @"+ (NSDictionary *)modelCustomPropertyMapper {\n    return @{";
+        stringc = @"+ (NSDictionary *)modelContainerPropertyGenericClass {\n    return @{";
+    }
+    if (modelToType == ZZJsonToModelToMJExtension) {
+        stringa = @"+ (NSDictionary *)mj_replacedKeyFromPropertyName {\n    return @{";
+        stringc = @"+ (NSDictionary *)mj_objectClassInArray {\n    return @{";
+    }
     NSString *stringb = @"};\n}\n";
-    NSString *stringc = @"+ (NSDictionary *)modelContainerPropertyGenericClass {\n    return @{";
     NSString *stringd = @"};\n}\n";
-    // YYModel modelCustomPropertyMapper
+    // 生成 自定义属性名
     NSString *string = @"";
-    // YYModel modelContainerPropertyGenericClass
+    // 生成 数组中的类
     NSString *strings = @"";
     // 解析
     NSArray *keys = classObj.classPropertys.allKeys;
@@ -330,7 +374,7 @@ static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/z
     }
     string = string.length > 0 ? [NSString stringWithFormat:@"%@%@%@",stringa,string,stringb] : @"";
     strings = strings.length > 0 ? [NSString stringWithFormat:@"%@%@%@",stringc,strings,stringd] : @"";
-
+    
     NSString *stringe = [NSString stringWithFormat:@"@implementation %@\n",classObj.className.zzFormatClassName];
     return [NSString stringWithFormat:@"%@%@%@@end",stringe,string,strings];
 }

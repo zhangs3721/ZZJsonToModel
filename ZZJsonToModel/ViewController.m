@@ -1,8 +1,10 @@
 #import "ViewController.h"
 #import "ZZJsonToModel.h"
-
+#import "MJExtension.h"
 #import "YYModel.h"
+
 #import "TestModel.h"
+#import "ZZTestModel.h"
 
 @implementation ViewController
 
@@ -16,11 +18,11 @@
     // 2.生成文件存放的路径
 #warning 此地址为 mac 文件夹地址，地址错误报错为 The folder “XXX.h” doesn’t exist.（暂时仅支持模拟器生成 model 文件，正在完善中。。。）
     NSURL *path = [NSURL URLWithString:@"/Users/zhang/Desktop/ZZJsonToModel/ZZJsonToModel"];
-    
+        
     // 3.调用方法
     __block BOOL isSuccess = NO;
     double times = [ZZJsonToModel modelWithSpendTime:^{ // 计算代码耗时
-        isSuccess = [ZZJsonToModel modelWithFileName:@"TestModel" extensionName:@"class" json:json fileURL:path error:^(NSError *error) {
+        isSuccess = [ZZJsonToModel zz_createMJModelWithJson:json fileName:nil extensionName:@"MJ_class" fileURL:path error:^(NSError *error) {
             NSLog(@"error = %@",error.localizedDescription);
         }];
     }];
@@ -28,11 +30,11 @@
     
     if (isSuccess) {
         // 4.生成model
+        __block ZZTestModel *model = nil;
         double times = [ZZJsonToModel modelWithSpendTime:^{ // 计算代码耗时
-            TestModel *model = nil;
-            model = [TestModel yy_modelWithJSON:json];
+            model = [ZZTestModel mj_objectWithKeyValues:json];
         }];
-        NSLog(@"YYModel spend time = %f 秒",times);
+        NSLog(@"Model spend time = %f 秒",times);
     }
 }
 
