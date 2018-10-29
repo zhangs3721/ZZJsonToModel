@@ -73,7 +73,7 @@
 
 ![导入生成好的model文件](https://upload-images.jianshu.io/upload_images/5173163-b095b8d8e90d2926.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 4.引用.h `#import "TestModel.h"`后，使用YYModel
+### 4.引用.h `#import "TestModel.h"`后，使用YYModel（最好注释掉生成Model的代码）
 
 ![引用.h 后，使用YYModel](https://upload-images.jianshu.io/upload_images/5173163-daa4306a7da6c189.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
