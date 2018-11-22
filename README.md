@@ -47,7 +47,7 @@
 
 * 1.重复的key值生成的类名，从第二个类起，类名前加一个`Z`。
 * 2.属性名是系统保留字的，全部大写，因为大写不影响智能提示。
-* 3.如果数组中相同层级的key值类型不同，统一转化为字符串。
+* 3.如果数组中相同层级的key值类型不同，统一转化为`id`类型。
 * 4.项目不同.h文件中类名相同会引发报错，类名并不会污染数据，建议加上类名后缀。（随机字符串也可以）
 
 
@@ -73,7 +73,7 @@
 
 ![导入生成好的model文件](https://upload-images.jianshu.io/upload_images/5173163-b095b8d8e90d2926.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 4.引用.h `#import "TestModel.h"`后，使用YYModel
+### 4.引用.h `#import "TestModel.h"`后，使用YYModel（最好注释掉生成Model的代码）
 
 ![引用.h 后，使用YYModel](https://upload-images.jianshu.io/upload_images/5173163-daa4306a7da6c189.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
