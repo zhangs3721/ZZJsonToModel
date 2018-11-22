@@ -3,8 +3,7 @@
 #import "MJExtension.h"
 #import "YYModel.h"
 
-#import "TestModel.h"
-#import "ZZTestModel.h"
+#import "HomeModel.h"
 
 @implementation ViewController
 
@@ -12,7 +11,7 @@
     [super viewDidLoad];
     
     // 1.模拟返回的 json
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"JSON" ofType:@"json"]];
+    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"JSONS" ofType:@"json"]];
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
     
     // 2.生成文件存放的路径
@@ -22,20 +21,20 @@
     // 3.调用方法
     __block BOOL isSuccess = NO;
     double times = [ZZJsonToModel modelWithSpendTime:^{ // 计算代码耗时
-        isSuccess = [ZZJsonToModel zz_createMJModelWithJson:json fileName:nil extensionName:@"MJ_class" fileURL:path error:^(NSError *error) {
+        isSuccess = [ZZJsonToModel zz_createYYModelWithJson:json fileName:@"HomeModel" extensionName:@"class" fileURL:path error:^(NSError *error) {
             NSLog(@"error = %@",error.localizedDescription);
         }];
     }];
     NSLog(@"ZZJsonToModel spend time = %f 秒",times);
     
-    if (isSuccess) {
-        // 4.生成model
-        __block ZZTestModel *model = nil;
-        double times = [ZZJsonToModel modelWithSpendTime:^{ // 计算代码耗时
-            model = [ZZTestModel mj_objectWithKeyValues:json];
-        }];
-        NSLog(@"Model spend time = %f 秒",times);
-    }
+//    if (isSuccess) {
+//        // 4.生成model
+//        __block HomeModel *model = nil;
+//        double times = [ZZJsonToModel modelWithSpendTime:^{ // 计算代码耗时
+//            model = [HomeModel yy_modelWithJSON:json];
+//        }];
+//        NSLog(@"Model spend time = %f 秒",times);
+//    }
 }
 
 @end

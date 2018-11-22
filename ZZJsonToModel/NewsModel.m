@@ -4,34 +4,22 @@
 // 如果 ZZJsonToModel 为您节约了时间，您的**🌟星星**是我优化项目的动力，谢谢🙏🙏🙏
 // 如果您发现了bug，或有新的想法和建议，请及时通知我qq（461818526）。
 
-#import "TestModel.h"
+#import "NewsModel.h"
 
-@implementation AuthorsClass
-@end
-
-@implementation ZAuthorClass
-@end
-
-@implementation AuthorClass
-@end
-
-@implementation PagesClass
-@end
-
-@implementation IdClass
-@end
-
-@implementation BookInfoClass
+@implementation WheelsNewsModel
 + (NSDictionary *)modelCustomPropertyMapper {
-    return @{ @"ID" : @"id",};
+    return @{ @"ID" : @"id", @"TYPE" : @"type", @"imgUrl" : @"img_url",};
 }
 @end
 
-@implementation TestModel
+@implementation ListNewsModel
 + (NSDictionary *)modelCustomPropertyMapper {
-    return @{ @"bookName" : @"book_name", @"bookInfo" : @"book_info",};
+    return @{ @"classId" : @"class_id", @"videoImg" : @"video_img", @"imgUrl2" : @"img_url2", @"ID" : @"id", @"imgUrl1" : @"img_url1", @"createTime" : @"create_time", @"TYPE" : @"type", @"imgUrl" : @"img_url",};
 }
+@end
+
+@implementation NewsModel
 + (NSDictionary *)modelContainerPropertyGenericClass {
-    return @{ @"pages" : [PagesClass class], @"bookInfo" : [BookInfoClass class],};
+    return @{ @"wheels" : [WheelsNewsModel class], @"list" : [ListNewsModel class],};
 }
 @end

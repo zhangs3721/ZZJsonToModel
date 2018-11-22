@@ -122,6 +122,7 @@ static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/z
     self.classNames = [NSMutableArray array];
     self.classObjects = [NSMutableArray array];
     [self formatDataToClassWith:dict withClassName:fileName withExtensionClassName:extensionName];
+    NSLog(@"");
 }
 /// 格式化数据中所有字典的类型
 - (void)formatDataToClassWith:(NSDictionary *)dict withClassName:(NSString *)className withExtensionClassName:(NSString *)extensionName {
@@ -133,14 +134,20 @@ static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/z
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     for (NSString *key in keys) {
         if ([dict[key] isKindOfClass:[NSArray class]]) {
-            // 添加这个属性
-            NSString *name = [self returnNewName:key withExtensionClassName:extensionName];
-            NSString *newName = [NSString stringWithFormat:@"%@+%@",kkPropertyTypeArray,name];
-            [tempDic setObject:newName forKey:key];
             // 整理数组并返回一个整理好的字典
             NSDictionary *dicts = [self returnArraysDictionary:dict[key]];
-            // 递归
-            [self formatDataToClassWith:dicts withClassName:name withExtensionClassName:extensionName];
+            if (dicts) {
+                // 添加这个属性
+                NSString *name = [self returnNewName:key withExtensionClassName:extensionName];
+                NSString *newName = [NSString stringWithFormat:@"%@%@",kkPropertyTypeArray,name];
+                [tempDic setObject:newName forKey:key];
+                // 递归
+                [self formatDataToClassWith:dicts withClassName:name withExtensionClassName:extensionName];
+            }else {
+                // 添加这个属性
+                NSString *newName = [NSString stringWithFormat:@"%@%@",kkPropertyTypeArray,@"0"];
+                [tempDic setObject:newName forKey:key];
+            }
         }else if ([dict[key] isKindOfClass:[NSDictionary class]]) {
             // 添加这个属性
             NSString *name = [self returnNewName:key withExtensionClassName:extensionName];
@@ -151,6 +158,9 @@ static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/z
             [tempDic setObject:kkPropertyTypeNull forKey:key];
         }else if ([dict[key] isKindOfClass:[NSString class]]) {
             [tempDic setObject:kkPropertyTypeString forKey:key];
+            if ([dict[key] isEqualToString:kkPropertyTypeOther]) {
+                [tempDic setObject:kkPropertyTypeOther forKey:key];
+            }
         }else {
             NSString *classDecription = [[dict[key] class] description];
             if ([classDecription containsString:@"NSCFBoolean"]) {
@@ -185,6 +195,10 @@ static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/z
             [otherArray addObject:object];
         }
     }
+    if (dictArray.count == 0) {
+        // 此时数组中没有字典
+        return nil;
+    }
     // 合并数组中所有字典
     NSMutableDictionary *allDicts = [NSMutableDictionary dictionary];
     for (NSDictionary *dict in dictArray) {
@@ -207,7 +221,7 @@ static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/z
             NSString *class1 = [[obja class] description];
             NSString *class2 = [[objb class] description];
             if (![class1 isEqualToString:class2]) {
-                [allDicts setObject:kkPropertyTypeString forKey:sameKey];
+                [allDicts setObject:kkPropertyTypeOther forKey:sameKey];
             }
         }
     }
@@ -293,6 +307,9 @@ static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/z
         NSString *propertyName = key.zzFormatPropertyName;
         NSString *temp = @"";
         if ([object isKindOfClass:[NSString class]]) {
+            if ([object isEqualToString:kkPropertyTypeOther]) {
+                temp = [NSString stringWithFormat:@"@property (nonatomic,strong) id %@;",propertyName];
+            }
             if ([object isEqualToString:kkPropertyTypeString]) {
                 temp = [NSString stringWithFormat:@"@property (nonatomic,copy  ) NSString *%@;",propertyName];
             }
@@ -308,16 +325,17 @@ static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/z
             if ([object isEqualToString:kkPropertyTypeNull]) {
                 temp = [NSString stringWithFormat:@"@property (nonatomic,copy  ) NSString *%@;",propertyName];
             }
-            if ([object isEqualToString:kkPropertyTypeOther]) {
-                temp = [NSString stringWithFormat:@"@property (nonatomic,copy  ) NSString *%@;",propertyName];
-            }
             if ([self.classNames containsObject:object]) {
                 NSString *className = ((NSString *)object).zzFormatClassName;
                 temp = [NSString stringWithFormat:@"@property (nonatomic,strong) %@ *%@;",className,propertyName];
             }
             if ([object hasPrefix:kkPropertyTypeArray]) {
-                NSString *className = [(NSString *)object substringFromIndex:kkPropertyTypeArray.length+1];
-                temp = [NSString stringWithFormat:@"@property (nonatomic,strong) NSArray<%@ *> *%@;",className.zzFormatClassName,propertyName];
+                NSString *className = [(NSString *)object substringFromIndex:kkPropertyTypeArray.length];
+                if ([className isEqualToString:@"0"]) {
+                    temp = [NSString stringWithFormat:@"@property (nonatomic,strong) NSArray *%@;",propertyName];
+                }else {
+                    temp = [NSString stringWithFormat:@"@property (nonatomic,strong) NSArray<%@ *> *%@;",className.zzFormatClassName,propertyName];
+                }
             }
         }
         classString = [NSString stringWithFormat:@"%@\n%@",classString,temp];
@@ -368,7 +386,7 @@ static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/z
         // 数组中类（泛型）
         id object = classObj.classPropertys[key];
         if ([object hasPrefix:kkPropertyTypeArray]) {
-            NSString *className = [(NSString *)object substringFromIndex:kkPropertyTypeArray.length+1];
+            NSString *className = [(NSString *)object substringFromIndex:kkPropertyTypeArray.length];
             strings = [NSString stringWithFormat:@"%@ @\"%@\" : [%@ class],",strings,key.zzFormatPropertyName,className.zzFormatClassName];
         }
     }
