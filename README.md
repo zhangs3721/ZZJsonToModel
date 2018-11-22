@@ -22,13 +22,13 @@
   "book_name" : "Harry Potter",
   "book_info" : [
     {
-      "mark" : "text",
+      "mark" : "text",  // key值类型不同
       "uid" : "asdj12usdfff3mk",
       "type" : "text",
       "text" : "this is a text!"  // 此处key不同
     },
     {
-      "mark" : 120,
+      "mark" : 120,  // key值类型不同
       "uid" : "asdj12ujj2uu33mk",
       "type" : "video",
       "videos" : {  // 此处key不同
@@ -36,7 +36,7 @@
       }
     },
     {
-      "mark" : 110,
+      "mark" : 110,  // key值类型不同
       "uid" : "asdj123sfdfu33nn",
       "type" : "img",
       "imgs" : {  // 此处key不同
