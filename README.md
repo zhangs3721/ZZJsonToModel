@@ -18,22 +18,37 @@
       "author" : "zzz"
     }
   },
-  "pages" : 256,
+  "pages" : [],
   "book_name" : "Harry Potter",
   "book_info" : [
     {
-      "one" : "this is one day"
+      "mark" : "text",
+      "uid" : "asdj12usdfff3mk",
+      "type" : "text",
+      "text" : "this is a text!"
     },
     {
-      "one" : 10,
-      "id" : "this is id"
+      "mark" : 120,
+      "uid" : "asdj12ujj2uu33mk",
+      "type" : "video",
+      "videos" : {
+        "one" : "onebook.mp4"
+      }
+    },
+    {
+      "mark" : 110,
+      "uid" : "asdj123sfdfu33nn",
+      "type" : "img",
+      "imgs" : {
+        "one" : "onebook.png"
+      }
     }
   ]
 }
 ```
 
 生成 YYModel 图：
-![生成 YYModel 图](https://upload-images.jianshu.io/upload_images/5173163-f81d1de1e64b9a1d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![生成 YYModel 图](https://upload-images.jianshu.io/upload_images/5173163-063f13ede67d5c49.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 **注：** 示例的json中，有几点特殊。
