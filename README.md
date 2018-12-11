@@ -9,11 +9,11 @@
 
 ```json
 {
-  "author" : {
+  "author" : { // 重复key
     "bools" : true,
-    "author" : {
+    "author" : { // 重复key
       "authors" : {
-        "author" : 19.100000000000001
+        "author" : 19.100000000000001 
       },
       "author" : "zzz"
     }
@@ -25,13 +25,13 @@
       "mark" : "text",  // key值类型不同
       "uid" : "asdj12usdfff3mk",
       "type" : "text",
-      "text" : "this is a text!"  // 此处key不同
+      "text" : "this is a text!"  // 特殊的key
     },
     {
       "mark" : 120,  // key值类型不同
       "uid" : "asdj12ujj2uu33mk",
       "type" : "video",
-      "videos" : {  // 此处key不同
+      "videos" : {  /// key不同
         "one" : "onebook.mp4"
       }
     },
@@ -39,7 +39,7 @@
       "mark" : 110,  // key值类型不同
       "uid" : "asdj123sfdfu33nn",
       "type" : "img",
-      "imgs" : {  // 此处key不同
+      "imgs" : {  /// key不同
         "one" : "onebook.png"
       }
     }
@@ -53,9 +53,9 @@
 
 **注：** 示例的json中，有几点特殊。
 
-* 1.重复的key值`author `。
-* 2.特殊key值`id`。
-* 3.数组`book_info`中的key值`one`的类型不同。
+* 1.重复的key`author `。
+* 2.特殊key`type`。
+* 3.数组`book_info`中的key`mark`的值类型不同。
 * 4.类名后缀`+Class`。
 
 处理方法：
