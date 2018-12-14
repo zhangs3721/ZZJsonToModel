@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F23B5A821998E8E00F1941B /* HomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23B5A621998E8D00F1941B /* HomeModel.m */; };
 		1F31537821524C31007FA61B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F31537721524C31007FA61B /* AppDelegate.m */; };
 		1F31537B21524C31007FA61B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F31537A21524C31007FA61B /* ViewController.m */; };
 		1F31537E21524C31007FA61B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F31537C21524C31007FA61B /* Main.storyboard */; };
@@ -30,14 +29,12 @@
 		1F388F4021606EDE00A3AAC2 /* NSObject+MJClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F388F3221606EDE00A3AAC2 /* NSObject+MJClass.m */; };
 		1F388F4121606EDE00A3AAC2 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F388F3321606EDE00A3AAC2 /* NSString+MJExtension.m */; };
 		1F388F4221606EDE00A3AAC2 /* MJPropertyKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F388F3421606EDE00A3AAC2 /* MJPropertyKey.m */; };
-		1F388F4321606EDE00A3AAC2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F388F3821606EDE00A3AAC2 /* Info.plist */; };
 		1F388F4421606EDE00A3AAC2 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F388F3921606EDE00A3AAC2 /* MJFoundation.m */; };
 		1F388F492160797D00A3AAC2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1F388F482160797C00A3AAC2 /* README.md */; };
+		1F3D075D21C40F1A00000B3A /* HomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3D075C21C40F1A00000B3A /* HomeModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1F23B5A621998E8D00F1941B /* HomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeModel.m; sourceTree = "<group>"; };
-		1F23B5A721998E8E00F1941B /* HomeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeModel.h; sourceTree = "<group>"; };
 		1F31537321524C31007FA61B /* ZZJsonToModel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZZJsonToModel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F31537621524C31007FA61B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1F31537721524C31007FA61B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -80,9 +77,10 @@
 		1F388F3521606EDE00A3AAC2 /* MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJProperty.h; sourceTree = "<group>"; };
 		1F388F3621606EDE00A3AAC2 /* NSObject+MJKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJKeyValue.h"; sourceTree = "<group>"; };
 		1F388F3721606EDE00A3AAC2 /* NSObject+MJCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJCoding.h"; sourceTree = "<group>"; };
-		1F388F3821606EDE00A3AAC2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F388F3921606EDE00A3AAC2 /* MJFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
 		1F388F482160797C00A3AAC2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		1F3D075B21C40F1A00000B3A /* HomeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeModel.h; path = ZZJsonToModel/HomeModel.h; sourceTree = SOURCE_ROOT; };
+		1F3D075C21C40F1A00000B3A /* HomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeModel.m; path = ZZJsonToModel/HomeModel.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +99,7 @@
 			children = (
 				1F388F482160797C00A3AAC2 /* README.md */,
 				1F31537521524C31007FA61B /* ZZJsonToModel */,
+				1F31538C21524C48007FA61B /* Others */,
 				1F31537421524C31007FA61B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -116,17 +115,16 @@
 		1F31537521524C31007FA61B /* ZZJsonToModel */ = {
 			isa = PBXGroup;
 			children = (
-				1F23B5A721998E8E00F1941B /* HomeModel.h */,
-				1F23B5A621998E8D00F1941B /* HomeModel.m */,
+				1F3D075B21C40F1A00000B3A /* HomeModel.h */,
+				1F3D075C21C40F1A00000B3A /* HomeModel.m */,
+				1F31538D21524C76007FA61B /* ZZJsonToModel */,
+				1F31539421524C80007FA61B /* YYModel */,
+				1F388F2321606EDE00A3AAC2 /* MJExtension */,
+				1F31537921524C31007FA61B /* ViewController.h */,
+				1F31537A21524C31007FA61B /* ViewController.m */,
 				1F31539C21524C91007FA61B /* JSON.json */,
 				1F31539D21524C91007FA61B /* JSONS.json */,
 				1F31539E21524C92007FA61B /* JSONSS.json */,
-				1F388F2321606EDE00A3AAC2 /* MJExtension */,
-				1F31538C21524C48007FA61B /* Others */,
-				1F31537921524C31007FA61B /* ViewController.h */,
-				1F31537A21524C31007FA61B /* ViewController.m */,
-				1F31539421524C80007FA61B /* YYModel */,
-				1F31538D21524C76007FA61B /* ZZJsonToModel */,
 			);
 			path = ZZJsonToModel;
 			sourceTree = "<group>";
@@ -191,7 +189,6 @@
 				1F388F3521606EDE00A3AAC2 /* MJProperty.h */,
 				1F388F3621606EDE00A3AAC2 /* NSObject+MJKeyValue.h */,
 				1F388F3721606EDE00A3AAC2 /* NSObject+MJCoding.h */,
-				1F388F3821606EDE00A3AAC2 /* Info.plist */,
 				1F388F3921606EDE00A3AAC2 /* MJFoundation.m */,
 			);
 			path = MJExtension;
@@ -261,7 +258,6 @@
 				1F31537E21524C31007FA61B /* Main.storyboard in Resources */,
 				1F31539F21524C92007FA61B /* JSON.json in Resources */,
 				1F388F492160797D00A3AAC2 /* README.md in Resources */,
-				1F388F4321606EDE00A3AAC2 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +276,7 @@
 				1F31538621524C32007FA61B /* main.m in Sources */,
 				1F31539221524C76007FA61B /* ZZJsonToModel.m in Sources */,
 				1F388F4221606EDE00A3AAC2 /* MJPropertyKey.m in Sources */,
-				1F23B5A821998E8E00F1941B /* HomeModel.m in Sources */,
+				1F3D075D21C40F1A00000B3A /* HomeModel.m in Sources */,
 				1F31539A21524C80007FA61B /* NSObject+YYModel.m in Sources */,
 				1F31537821524C31007FA61B /* AppDelegate.m in Sources */,
 				1F388F4121606EDE00A3AAC2 /* NSString+MJExtension.m in Sources */,
@@ -430,8 +426,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 42TQFX68XH;
-				INFOPLIST_FILE = "$(SRCROOT)/ZZJsonToModel/Others/Info.plist";
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Others/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -448,8 +444,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 42TQFX68XH;
-				INFOPLIST_FILE = "$(SRCROOT)/ZZJsonToModel/Others/Info.plist";
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Others/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

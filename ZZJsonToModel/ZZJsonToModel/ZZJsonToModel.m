@@ -387,7 +387,9 @@ static NSString *headerString = @"\n// ZZJsonToModel(GitHub:https://github.com/z
         id object = classObj.classPropertys[key];
         if ([object hasPrefix:kkPropertyTypeArray]) {
             NSString *className = [(NSString *)object substringFromIndex:kkPropertyTypeArray.length];
-            strings = [NSString stringWithFormat:@"%@ @\"%@\" : [%@ class],",strings,key.zzFormatPropertyName,className.zzFormatClassName];
+            if (![className isEqualToString:@"0"]) {
+                strings = [NSString stringWithFormat:@"%@ @\"%@\" : [%@ class],",strings,key.zzFormatPropertyName,className.zzFormatClassName];
+            }
         }
     }
     string = string.length > 0 ? [NSString stringWithFormat:@"%@%@%@",stringa,string,stringb] : @"";

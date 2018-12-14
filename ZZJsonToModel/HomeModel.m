@@ -19,26 +19,17 @@
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{ @"thumbnailSmall" : @"thumbnail_small", @"downloadUrl" : @"download_url",};
 }
-+ (NSDictionary *)modelContainerPropertyGenericClass {
-    return @{ @"medium" : [Num0 class], @"small" : [Num0 class], @"thumbnailSmall" : [Num0 class], @"downloadUrl" : [Num0 class], @"big" : [Num0 class],};
-}
 @end
 
 @implementation UClass
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{ @"roomRole" : @"room_role", @"roomUrl" : @"room_url", @"roomName" : @"room_name", @"isVip" : @"is_vip", @"isV" : @"is_v", @"roomIcon" : @"room_icon",};
 }
-+ (NSDictionary *)modelContainerPropertyGenericClass {
-    return @{ @"header" : [Num0 class],};
-}
 @end
 
 @implementation VideoClass
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{ @"thumbnailSmall" : @"thumbnail_small",};
-}
-+ (NSDictionary *)modelContainerPropertyGenericClass {
-    return @{ @"thumbnail" : [Num0 class], @"download" : [Num0 class], @"thumbnailSmall" : [Num0 class], @"video" : [Num0 class],};
 }
 @end
 
@@ -47,7 +38,7 @@
     return @{ @"ID" : @"id", @"isBest" : @"is_best", @"TYPE" : @"type", @"shareUrl" : @"share_url", @"topComments" : @"top_comments",};
 }
 + (NSDictionary *)modelContainerPropertyGenericClass {
-    return @{ @"tags" : [TagsClass class], @"topComments" : [Num0 class],};
+    return @{ @"tags" : [TagsClass class],};
 }
 @end
 
