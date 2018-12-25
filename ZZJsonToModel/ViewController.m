@@ -11,7 +11,7 @@
     [super viewDidLoad];
     
     // 1.模拟返回的 json
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"JSONS" ofType:@"json"]];
+    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"JSONSS" ofType:@"json"]];
     id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
     
     // 2.生成文件存放的路径

@@ -1,37 +1,39 @@
 {
-    "author" : {
-        "bools" : true,
-        "author" : {
-            "author" : "zzz",
-            "authors" : {
-                "author" : 19.1
+    "author":{
+        "bools":true,
+        "author":{
+            "author":"zzz",
+            "authors":{
+                "author":19.1
             }
         }
     },
-    "pages" : [],
-    "book_name" : "Harry Potter",
-    "book_info" : [
-                   {
-                   "type" : "text",
-                   "mark" : "text",
-                   "uid" : "asdj12usdfff3mk",
-                   "text" : "this is a text!"
-                   },
-                   {
-                   "type" : "video",
-                   "mark" : 120,
-                   "uid" : "asdj12ujj2uu33mk",
-                   "videos" : {
-                   "one":"onebook.mp4"
-                   }
-                   },
-                   {
-                   "type" : "img",
-                   "mark" : 110,
-                   "uid" : "asdj123sfdfu33nn",
-                   "imgs" : {
-                   "one":"onebook.png"
-                   }
-                   }
-                   ]
+    "pages":[
+        
+    ],
+    "book_name":"Harry Potter",
+    "book_info":[
+        {
+            "type":"text",
+            "mark":"text",
+            "uid":"asdj12usdfff3mk",
+            "text":"this is a text!"
+        },
+        {
+            "type":"video",
+            "mark":120,
+            "uid":"asdj12ujj2uu33mk",
+            "videos":{
+                "one":"onebook.mp4"
+            }
+        },
+        {
+            "type":"img",
+            "mark":110,
+            "uid":"asdj123sfdfu33nn",
+            "imgs":{
+                "one":"onebook.png"
+            }
+        }
+    ]
 }

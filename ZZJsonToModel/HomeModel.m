@@ -6,44 +6,20 @@
 
 #import "HomeModel.h"
 
-@implementation InfoClass
-@end
-
-@implementation TagsClass
+@implementation DataClass
 + (NSDictionary *)modelCustomPropertyMapper {
-    return @{ @"imageList" : @"image_list", @"forumSort" : @"forum_sort", @"forumStatus" : @"forum_status", @"ID" : @"id", @"subNumber" : @"sub_number", @"postNumber" : @"post_number", @"columSet" : @"colum_set", @"displayLevel" : @"display_level",};
+    return @{ @"thumbnailPicS" : @"thumbnail_pic_s", @"thumbnailPicS03" : @"thumbnail_pic_s03", @"authorName" : @"author_name", @"thumbnailPicS02" : @"thumbnail_pic_s02",};
 }
 @end
 
-@implementation ImageClass
-+ (NSDictionary *)modelCustomPropertyMapper {
-    return @{ @"thumbnailSmall" : @"thumbnail_small", @"downloadUrl" : @"download_url",};
-}
-@end
-
-@implementation UClass
-+ (NSDictionary *)modelCustomPropertyMapper {
-    return @{ @"roomRole" : @"room_role", @"roomUrl" : @"room_url", @"roomName" : @"room_name", @"isVip" : @"is_vip", @"isV" : @"is_v", @"roomIcon" : @"room_icon",};
-}
-@end
-
-@implementation VideoClass
-+ (NSDictionary *)modelCustomPropertyMapper {
-    return @{ @"thumbnailSmall" : @"thumbnail_small",};
-}
-@end
-
-@implementation ListClass
-+ (NSDictionary *)modelCustomPropertyMapper {
-    return @{ @"ID" : @"id", @"isBest" : @"is_best", @"TYPE" : @"type", @"shareUrl" : @"share_url", @"topComments" : @"top_comments",};
-}
+@implementation ResultClass
 + (NSDictionary *)modelContainerPropertyGenericClass {
-    return @{ @"tags" : [TagsClass class],};
+    return @{ @"data" : [DataClass class],};
 }
 @end
 
 @implementation HomeModel
-+ (NSDictionary *)modelContainerPropertyGenericClass {
-    return @{ @"list" : [ListClass class],};
++ (NSDictionary *)modelCustomPropertyMapper {
+    return @{ @"errorCode" : @"error_code",};
 }
 @end

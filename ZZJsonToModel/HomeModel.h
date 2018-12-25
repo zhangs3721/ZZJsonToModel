@@ -6,82 +6,25 @@
 
 #import <Foundation/Foundation.h>
 
-@interface InfoClass : NSObject
-@property (nonatomic,assign) NSInteger count;
-@property (nonatomic,copy  ) NSString *np;
+@interface DataClass : NSObject
+@property (nonatomic,copy  ) NSString *category;
+@property (nonatomic,copy  ) NSString *thumbnailPicS;
+@property (nonatomic,copy  ) NSString *thumbnailPicS03;
+@property (nonatomic,copy  ) NSString *title;
+@property (nonatomic,copy  ) NSString *uniquekey;
+@property (nonatomic,copy  ) NSString *authorName;
+@property (nonatomic,copy  ) NSString *date;
+@property (nonatomic,copy  ) NSString *thumbnailPicS02;
+@property (nonatomic,copy  ) NSString *url;
 @end
 
-@interface TagsClass : NSObject
-@property (nonatomic,copy  ) NSString *imageList;
-@property (nonatomic,assign) NSInteger forumSort;
-@property (nonatomic,assign) NSInteger forumStatus;
-@property (nonatomic,assign) NSInteger ID;
-@property (nonatomic,assign) NSInteger subNumber;
-@property (nonatomic,assign) NSInteger postNumber;
-@property (nonatomic,copy  ) NSString *name;
-@property (nonatomic,assign) NSInteger columSet;
-@property (nonatomic,assign) NSInteger displayLevel;
-@property (nonatomic,copy  ) NSString *tail;
-@property (nonatomic,copy  ) NSString *info;
-@end
-
-@interface ImageClass : NSObject
-@property (nonatomic,strong) NSArray *medium;
-@property (nonatomic,assign) NSInteger height;
-@property (nonatomic,strong) NSArray *small;
-@property (nonatomic,strong) NSArray *thumbnailSmall;
-@property (nonatomic,strong) NSArray *downloadUrl;
-@property (nonatomic,assign) NSInteger width;
-@property (nonatomic,strong) NSArray *big;
-@end
-
-@interface UClass : NSObject
-@property (nonatomic,copy  ) NSString *roomRole;
-@property (nonatomic,copy  ) NSString *uid;
-@property (nonatomic,strong) NSArray *header;
-@property (nonatomic,copy  ) NSString *roomUrl;
-@property (nonatomic,copy  ) NSString *roomName;
-@property (nonatomic,assign) BOOL isVip;
-@property (nonatomic,assign) BOOL isV;
-@property (nonatomic,copy  ) NSString *roomIcon;
-@property (nonatomic,assign) NSInteger relationship;
-@property (nonatomic,copy  ) NSString *name;
-@end
-
-@interface VideoClass : NSObject
-@property (nonatomic,strong) NSArray *thumbnail;
-@property (nonatomic,assign) NSInteger height;
-@property (nonatomic,strong) NSArray *download;
-@property (nonatomic,assign) NSInteger width;
-@property (nonatomic,assign) NSInteger playfcount;
-@property (nonatomic,assign) NSInteger duration;
-@property (nonatomic,strong) NSArray *thumbnailSmall;
-@property (nonatomic,strong) NSArray *video;
-@property (nonatomic,assign) NSInteger playcount;
-@end
-
-@interface ListClass : NSObject
-@property (nonatomic,copy  ) NSString *ID;
-@property (nonatomic,copy  ) NSString *up;
-@property (nonatomic,assign) NSInteger isBest;
-@property (nonatomic,strong) VideoClass *video;
-@property (nonatomic,copy  ) NSString *passtime;
-@property (nonatomic,strong) id cate;
-@property (nonatomic,strong) NSArray<TagsClass *> *tags;
-@property (nonatomic,copy  ) NSString *TYPE;
-@property (nonatomic,copy  ) NSString *comment;
-@property (nonatomic,strong) ImageClass *image;
-@property (nonatomic,assign) NSInteger down;
-@property (nonatomic,copy  ) NSString *text;
-@property (nonatomic,copy  ) NSString *shareUrl;
-@property (nonatomic,strong) UClass *u;
-@property (nonatomic,assign) NSInteger forward;
-@property (nonatomic,strong) NSArray *topComments;
-@property (nonatomic,copy  ) NSString *bookmark;
-@property (nonatomic,assign) NSInteger status;
+@interface ResultClass : NSObject
+@property (nonatomic,copy  ) NSString *stat;
+@property (nonatomic,strong) NSArray<DataClass *> *data;
 @end
 
 @interface HomeModel : NSObject
-@property (nonatomic,strong) InfoClass *info;
-@property (nonatomic,strong) NSArray<ListClass *> *list;
+@property (nonatomic,strong) ResultClass *result;
+@property (nonatomic,assign) NSInteger errorCode;
+@property (nonatomic,copy  ) NSString *reason;
 @end
